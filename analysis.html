@@ -1006,19 +1006,24 @@
                     <div class="card">
                         <div class="d-flex w-100 justify-content-end p-4 pb-0">
                             <div class="d-flex position-relative dropdown w-auto">
-                                <button class="btn dropdown-toggle border border-primary" id='companyNameDropdownButton' type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    기업명
+                                <button class="btn border border-primary position-relative px-6" id='companyNameDropdownButton' type="button" aria-expanded="false">
+                                    <span class='me-5'>기업명</span>
+                                    <svg class='position-absolute end-10px top-50 translate-middle-y' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18 9L12 15L6 9" stroke="#33363F" stroke-width="2"/>
+                                    </svg>                                        
                                 </button>
-                                <input id='companyNameInput' type="text" data-bs-toggle="dropdown" class="d-none pe-6 form-control" placeholder='기업명'>
-                                <svg id='searchIcon' class='d-none position-absolute top-50 end-10px cursor-pointer translate-middle-y' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                </svg>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="#">기업명_1</a></li>
-                                    <li><a class="dropdown-item" href="#">기업명_2</a></li>
-                                    <li><a class="dropdown-item" href="#">기업명_3</a></li>
-                                    <li><a class="dropdown-item" href="#">기업명_4</a></li>
-                                </ul>
+                                <div id='companyNameInputContainer' class='d-none position-relative'>
+                                    <input id='companyNameInput' type="text" class="pe-6 form-control" placeholder='기업명' data-bs-toggle="dropdown">
+                                    <svg id='searchIcon' class='position-absolute top-50 end-10px cursor-pointer translate-middle-y' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                    </svg>
+                                    <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                        <li><a href="" class="dropdown-item">기업명_1</a></li>
+                                        <li><a href="" class="dropdown-item">기업명_2</a></li>
+                                        <li><a href="" class="dropdown-item">기업명_3</a></li>
+                                        <li><a href="" class="dropdown-item">기업명_4</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex w-100 justify-content-center py-4">
@@ -1066,31 +1071,42 @@
         <!-- Theme JS -->
         <script src="./assets/js/theme.bundle.js"></script>        <script>
             // 기업명 드롭다운 처리
-            document.querySelectorAll('#companyNameDropdownButton ~ .dropdown-menu .dropdown-item').forEach(function(item) {
-                item.addEventListener('click', function(e) {
+            document.querySelectorAll('.dropdown-item').forEach((item) => {
+                item.addEventListener('click', (e) => {
                     e.preventDefault();
         
-                    const selectedText = this.textContent;
+                    const selectedText = item.textContent;
                     const dropdownButton = document.getElementById('companyNameDropdownButton');
-                    dropdownButton.textContent = selectedText;
-        
+                    const dropdownButtonTitle = dropdownButton.querySelector('span');
+                    dropdownButtonTitle.textContent = selectedText;
+                    
                     // 검색 상태에서 원래대로 돌아오기
-                    const input = document.getElementById('companyNameInput');
-                    const searchIcon = document.getElementById('searchIcon');
+                    const companyNameInputContainer = document.getElementById('companyNameInputContainer');
+                    companyNameInputContainer.classList.add('d-none'); // input 숨기기
                     dropdownButton.classList.remove('d-none'); // dropdown 버튼 보이기
-                    input.classList.add('d-none'); // input 숨기기
-                    searchIcon.classList.add('d-none'); // 검색 아이콘 숨기기
                 });
             });
         
             // 검색 상태로 전환
-            document.getElementById('companyNameDropdownButton').addEventListener('click', function() {
+            document.getElementById('companyNameDropdownButton').addEventListener('click', function () {
                 this.classList.add('d-none'); // dropdown 버튼 숨기기
-                const input = document.getElementById('companyNameInput');
-                const searchIcon = document.getElementById('searchIcon');
-                input.classList.remove('d-none'); // input 보이기
-                searchIcon.classList.remove('d-none'); // 검색 아이콘 보이기
+                const companyNameInputContainer = document.getElementById('companyNameInputContainer');
+                companyNameInputContainer.classList.remove('d-none'); // input 보이기
             });
+
+            // 검색어 입력시 드롭다운 필터링
+            document.getElementById('companyNameInput').addEventListener("input", (e) => {
+                const inputText = e.target.value;
+                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                dropdownItems.forEach((item) => {
+                    const text = item.textContent;
+                    if (text.includes(inputText)) {
+                        item.classList.remove('d-none');
+                    } else {
+                        item.classList.add('d-none');
+                    }
+                })
+            })
         </script>
     </body>
 </html>
