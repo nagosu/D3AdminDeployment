@@ -1027,7 +1027,6 @@
                                         </ul>
                                     </div>
                                 </div>
-    
                             </div>
                             <div class="d-flex w-100 justify-content-between align-items-center">
                                 <div class="d-flex align-items-center gap-6">
@@ -1056,15 +1055,15 @@
                                             <li><a class="dropdown-item" href="#">대화 기록</a></li>
                                         </ul>
                                     </div>
-                                    <input type="text" class="form-control" placeholder='텍스트 입력'>
-                                    <button class="btn btn-dark h-50" style='white-space: nowrap;'>조회</button>
+                                    <input type="text" class="form-control" id='searchQuery' placeholder='텍스트 입력'>
+                                    <button class="btn btn-dark h-50" id='searchButton' style='white-space: nowrap;' disabled>조회</button>
     
                                 </div>
                             </div>
                         </div>
 
                         <!-- Table -->
-                        <div class="card-body table-responsive">
+                        <div class="card-body table-responsive" id='chatTable'>
                             <table id="projectsTable" class="table align-middle table-edge table-nowrap mb-0" style='table-layout: fixed;'>
                                 <thead>
                                     <tr>
@@ -1164,6 +1163,9 @@
                                 </li>
                               </ul>
                         </div>
+
+                        <span class="position-absolute top-50 start-50 translate-middle fs-3 text-gray-500 d-none" id='noResultText'>조회 결과가 없습니다.</span>
+
                     </div>
 
                 </div> <!-- / .row -->
@@ -1283,6 +1285,27 @@
                 // 전체 선택/해제 시에도 엑셀 다운로드 버튼 활성화/비활성화
                 const isChecked = Array.from(rowCheckboxes).some((cb) => cb.checked);
                 downloadButton.disabled = !isChecked;
+            });
+        </script>
+        <script>
+            const table = document.getElementById("chatTable");
+            const noResultText = document.getElementById("noResultText");
+
+            document.getElementById("searchButton").addEventListener("click", () => {
+                table.classList.add("d-none");
+                noResultText.classList.remove("d-none");
+            })
+        </script>
+        <script>
+            const searchQuery = document.getElementById("searchQuery");
+            const searchButton = document.getElementById("searchButton");
+
+            searchQuery.addEventListener("input", (e) => {
+                if (e.target.value.length > 0) {
+                    searchButton.disabled = false;
+                } else {
+                    searchButton.disabled = true;
+                }
             });
         </script>
     </body>
