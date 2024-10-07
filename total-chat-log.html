@@ -1226,8 +1226,10 @@
                     e.preventDefault();
         
                     const selectedText = item.textContent;
+                    const companyNameTitle = document.getElementById('companyNameTitle');
                     const dropdownButton = document.getElementById('companyNameDropdownButton');
                     const dropdownButtonTitle = dropdownButton.querySelector('span');
+                    companyNameTitle.textContent = selectedText;
                     dropdownButtonTitle.textContent = selectedText;
                     
                     // 검색 상태에서 원래대로 돌아오기
