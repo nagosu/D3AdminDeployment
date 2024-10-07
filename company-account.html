@@ -828,7 +828,7 @@
                   </svg>
                 </div>
             
-                <span class="fs-3 fw-bold">기업 계정</span>
+                <span class="fs-3 fw-bold">통합 관리자 계정</span>
             
                 <!-- Custmization offcanvas -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCustomize" aria-labelledby="offcanvasCustomizeTitle">
@@ -996,25 +996,25 @@
 
                     <!-- Title -->
                     <h1 class="h1">
-                        대화 내역
+                        기업 계정 목록
                     </h1>
                 </div>
 
                 <div class="row flex-lg-grow-1">
 
                     <!-- Card -->
-                    <div class="card border-0 flex-lg-grow-1">
+                    <div class="card border-0 flex-lg-grow-1 position-relative">
                         <div class="card-header d-flex flex-column gap-5">
                             <div class="d-flex w-100 justify-content-end align-items-center">
                                 <div class="d-flex align-items-center gap-4">
                                     <input type="text" class="form-control" placeholder='기업명 입력'>
-                                    <button class="btn btn-dark h-50" style='white-space: nowrap;'>조회</button>
+                                    <button class="btn btn-dark h-50" id='searchButton' style='white-space: nowrap;'>조회</button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Table -->
-                        <div class="card-body table-responsive">
+                        <div class="card-body table-responsive" id='companyTable'>
                             <table id="projectsTable" class="table align-middle table-edge table-nowrap mb-0" style='table-layout: fixed;'>
                                 <thead>
                                     <tr>
@@ -1041,11 +1041,11 @@
 
                         </div> <!-- / .table-responsive -->
 
-                        <div class="card-body d-flex w-100 justify-content-end align-items-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAccountModal">계정 생성</button></div>
+                        <div class="card-body position-absolute bottom-0 end-0"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAccountModal">계정 생성</button></div>
 
-                        <div class="card-footer w-100 d-flex justify-content-center">
+                        <div class="card-footer w-100 d-flex justify-content-center position-absolute bottom-0">
                             <!-- Pagination -->
-                            <ul class="pagination">
+                            <ul class="pagination m-0">
                                 <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Previous">
                                       <span aria-hidden="true">&laquo;</span>
@@ -1063,6 +1063,8 @@
                                 </li>
                               </ul>
                         </div>
+
+                        <span class="position-absolute top-50 start-50 translate-middle fs-3 text-gray-500 d-none" id='noResultText'>조회 결과가 없습니다.</span>
                     </div>
 
                 </div> <!-- / .row -->
@@ -1383,6 +1385,15 @@
                 });
             })
             </script>
+        <script>
+            document.getElementById("searchButton").addEventListener("click", () => {
+                const table = document.getElementById("companyTable");
+                const noResultText = document.getElementById("noResultText");
+
+                table.classList.add("d-none");
+                noResultText.classList.remove("d-none");
+            })
+        </script>
             
 
         <!-- JAVASCRIPT-->

@@ -828,7 +828,7 @@
                   </svg>
                 </div>
             
-                <span class="fs-3 fw-bold">기업 계정</span>
+                <span class="fs-3 fw-bold">통합 관리자 계정</span>
             
                 <!-- Custmization offcanvas -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCustomize" aria-labelledby="offcanvasCustomizeTitle">
@@ -1003,8 +1003,27 @@
                 <div class="row flex-lg-grow-1">
 
                     <!-- Card -->
-                    <div class="card border-0 flex-lg-grow-1">
+                    <div class="card border-0 flex-lg-grow-1 position-relative">
                         <div class="card-header d-flex flex-column gap-5">
+                            <div class="d-flex w-100 justify-content-between align-items-center mb-2 d-none" id='companyNameSelectContainer'>
+                                <h2 class="h2 m-0" id='companyNameTitle'></h2>
+                                <div class="d-flex position-relative dropdown w-auto">
+                                    <button class="btn dropdown-toggle border border-primary" id='companyNameDropdownButton' type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        기업명
+                                    </button>
+                                    <input id='companyNameInput' type="text" data-bs-toggle="dropdown" class="d-none w-100 pe-6 form-control" placeholder='기업명'>
+                                    <svg id='searchIcon' class='d-none position-absolute top-50 end-10px cursor-pointer translate-middle-y' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                    </svg>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="#">기업명_1</a></li>
+                                        <li><a class="dropdown-item" href="#">기업명_2</a></li>
+                                        <li><a class="dropdown-item" href="#">기업명_3</a></li>
+                                        <li><a class="dropdown-item" href="#">기업명_4</a></li>
+                                    </ul>
+                                </div>
+    
+                            </div>
                             <div class="d-flex w-100 justify-content-between align-items-center">
                                 <div class="d-flex align-items-center gap-6">
                                     <div class="form-check m-0">
@@ -1035,16 +1054,6 @@
                                     <input type="text" class="form-control" placeholder='텍스트 입력'>
                                     <button class="btn btn-dark h-50" style='white-space: nowrap;'>조회</button>
     
-                                    <script>
-                                        document.querySelectorAll('.dropdown-item').forEach(function(item) {
-                                            item.addEventListener('click', function(e) {
-                                                e.preventDefault();
-                                                const selectedText = this.textContent;
-                                                const dropdownButton = document.getElementById('categoryDropdownButton');
-                                                dropdownButton.textContent = selectedText;
-                                            });
-                                        });
-                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -1088,7 +1097,7 @@
                                         <td class="text-center p-2">
                                             <input type="checkbox" class="row-checkbox w-20px h-20px">
                                         </td>
-                                        <td class="text-center fs-4 p-2"><span>10</span></td>
+                                        <td class="text-center fs-4 p-2"><span>9</span></td>
                                         <td class="text-center fs-4 p-2"><span>2024.08.14</span></td>
                                         <td class="text-center fs-4 p-2"><span>gpt-4o-mini</span></td>
                                         <td class="d-flex justify-content-center align-items-center gap-2 fs-4 p-2">
@@ -1108,7 +1117,7 @@
                                         <td class="text-center p-2">
                                             <input type="checkbox" class="row-checkbox w-20px h-20px">
                                         </td>
-                                        <td class="text-center fs-4 p-2"><span>10</span></td>
+                                        <td class="text-center fs-4 p-2"><span>8</span></td>
                                         <td class="text-center fs-4 p-2"><span>2024.08.14</span></td>
                                         <td class="text-center fs-4 p-2"><span>gpt-4o-mini</span></td>
                                         <td class="d-flex justify-content-center align-items-center gap-2 fs-4 p-2">
@@ -1126,34 +1135,13 @@
                                     </tr>
                                 </tbody>
                             </table>
-
-                            <script>
-                                // 'selectAll' 체크박스를 클릭하면 모든 행의 체크박스를 선택하거나 해제하는 기능
-                                document.getElementById('selectAll').addEventListener('change', function() {
-                                  const isChecked = this.checked;
-                                  const checkboxes = document.querySelectorAll('.row-checkbox');
-                                  
-                                  checkboxes.forEach(function(checkbox) {
-                                    checkbox.checked = isChecked;
-                                  });
-                                });
-                              
-                                // 모든 개별 체크박스에 변화가 있을 때 'selectAll' 체크박스 상태를 업데이트
-                                const rowCheckboxes = document.querySelectorAll('.row-checkbox');
-                                rowCheckboxes.forEach(function(checkbox) {
-                                  checkbox.addEventListener('change', function() {
-                                    const allChecked = Array.from(rowCheckboxes).every(cb => cb.checked);
-                                    document.getElementById('selectAll').checked = allChecked;
-                                  });
-                                });
-                              </script>
                         </div> <!-- / .table-responsive -->
 
-                        <div class="card-body d-flex w-100 justify-content-end align-items-center"><button class="btn btn-primary">대화 내역 엑셀 다운로드</button></div>
+                        <div class="card-body position-absolute position-absolute bottom-0 end-0"><button class="btn btn-primary" id='excelDownloadButton' disabled>대화 내역 엑셀 다운로드</button></div>
 
-                        <div class="card-footer w-100 d-flex justify-content-center">
+                        <div class="card-footer position-absolute bottom-0 start-50 translate-middle-x">
                             <!-- Pagination -->
-                            <ul class="pagination">
+                            <ul class="pagination m-0">
                                 <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Previous">
                                       <span aria-hidden="true">&laquo;</span>
@@ -1226,5 +1214,83 @@
 
         <!-- JAVASCRIPT-->
         <!-- Theme JS -->
-        <script src="./assets/js/theme.bundle.js"></script>    </body>
+        <script src="./assets/js/theme.bundle.js"></script>        <script>
+            // 카테고리 드롭다운 처리
+            document.querySelectorAll('#categoryDropdownButton ~ .dropdown-menu .dropdown-item').forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const selectedText = this.textContent;
+                    const dropdownButton = document.getElementById('categoryDropdownButton');
+                    dropdownButton.textContent = selectedText;
+        
+                    const companyNameSelectContainer = document.getElementById('companyNameSelectContainer');
+                    
+                    // 카테고리에서 '기업명'을 선택했을 때만 companyNameSelectContainer를 보이게 하고,
+                    // 그 외의 경우에는 숨김
+                    if (selectedText === '기업명') {
+                        companyNameSelectContainer.classList.remove('d-none');
+                    } else {
+                        companyNameSelectContainer.classList.add('d-none');
+                    }
+                });
+            });
+        
+            // 기업명 드롭다운 처리
+            document.querySelectorAll('#companyNameDropdownButton ~ .dropdown-menu .dropdown-item').forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+        
+                    const selectedText = this.textContent;
+                    const dropdownButton = document.getElementById('companyNameDropdownButton');
+                    dropdownButton.textContent = selectedText;
+        
+                    // 선택된 기업명을 companyNameTitle에 넣음
+                    const companyNameTitle = document.getElementById('companyNameTitle');
+                    companyNameTitle.textContent = selectedText;
+        
+                    // 검색 상태에서 원래대로 돌아오기
+                    const input = document.getElementById('companyNameInput');
+                    const searchIcon = document.getElementById('searchIcon');
+                    dropdownButton.classList.remove('d-none'); // dropdown 버튼 보이기
+                    input.classList.add('d-none'); // input 숨기기
+                    searchIcon.classList.add('d-none'); // 검색 아이콘 숨기기
+                });
+            });
+        
+            // 검색 상태로 전환
+            document.getElementById('companyNameDropdownButton').addEventListener('click', function() {
+                this.classList.add('d-none'); // dropdown 버튼 숨기기
+                const input = document.getElementById('companyNameInput');
+                const searchIcon = document.getElementById('searchIcon');
+                input.classList.remove('d-none'); // input 보이기
+                searchIcon.classList.remove('d-none'); // 검색 아이콘 보이기
+            });
+        </script>
+        <script>
+            // 엑셀 다운로드 버튼을 가져옴
+            const downloadButton = document.getElementById("excelDownloadButton");
+            const selectAllCheckbox = document.getElementById("selectAll");
+            const rowCheckboxes = document.querySelectorAll(".row-checkbox");
+        
+            // 각 체크박스 클릭 시 엑셀 다운로드 버튼 활성화/비활성화 로직
+            rowCheckboxes.forEach((checkbox) => {
+                checkbox.addEventListener("change", () => {
+                    const isChecked = Array.from(rowCheckboxes).some((cb) => cb.checked);
+                    downloadButton.disabled = !isChecked;
+                });
+            });
+        
+            // 전체 선택/해제 기능
+            selectAllCheckbox.addEventListener("change", () => {
+                rowCheckboxes.forEach((checkbox) => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+        
+                // 전체 선택/해제 시에도 엑셀 다운로드 버튼 활성화/비활성화
+                const isChecked = Array.from(rowCheckboxes).some((cb) => cb.checked);
+                downloadButton.disabled = !isChecked;
+            });
+        </script>
+    </body>
 </html>
