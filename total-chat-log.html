@@ -1049,7 +1049,7 @@
                                         <button class="btn dropdown-toggle border border-primary" id='categoryDropdownButton' type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             카테고리
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ul class="dropdown-menu" id='categoryDropdownMenu' aria-labelledby="dropdownMenuButton">
                                             <li><a class="dropdown-item" href="#">기업명</a></li>
                                             <li><a class="dropdown-item" href="#">GPT Version</a></li>
                                             <li><a class="dropdown-item" href="#">대화 기록</a></li>
@@ -1102,7 +1102,7 @@
                                             <input type="checkbox" class="row-checkbox w-20px h-20px">
                                         </td>
                                         <td class="text-center fs-4 p-2"><span>9</span></td>
-                                        <td class="text-center fs-4 p-2"><span>2024.08.14</span></td>
+                                        <td class="text-center fs-4 p-2"><span>2024.06.14</span></td>
                                         <td class="text-center fs-4 p-2"><span>gpt-4o-mini</span></td>
                                         <td class="d-flex justify-content-center align-items-center gap-2 fs-4 p-2">
                                             <div class="d-flex flex-column cursor-pointer overflow-hidden" data-bs-toggle="modal" data-bs-target="#chatHistoryModal">
@@ -1122,7 +1122,7 @@
                                             <input type="checkbox" class="row-checkbox w-20px h-20px">
                                         </td>
                                         <td class="text-center fs-4 p-2"><span>8</span></td>
-                                        <td class="text-center fs-4 p-2"><span>2024.08.14</span></td>
+                                        <td class="text-center fs-4 p-2"><span>2024.04.14</span></td>
                                         <td class="text-center fs-4 p-2"><span>gpt-4o-mini</span></td>
                                         <td class="d-flex justify-content-center align-items-center gap-2 fs-4 p-2">
                                             <div class="d-flex flex-column cursor-pointer overflow-hidden" data-bs-toggle="modal" data-bs-target="#chatHistoryModal">
@@ -1223,7 +1223,7 @@
         <!-- Theme JS -->
         <script src="./assets/js/theme.bundle.js"></script>        <script>
             // 기업명 드롭다운 처리
-            document.querySelectorAll('.dropdown-item').forEach((item) => {
+            document.getElementById('companyNameInputContainer').querySelectorAll('.dropdown-item').forEach((item) => {
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
         
@@ -1307,6 +1307,17 @@
                     searchButton.disabled = true;
                 }
             });
+        </script>
+        <script>
+            document.getElementById('categoryDropdownMenu').querySelectorAll('.dropdown-item').forEach((item) => {
+                item.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const selectedText = item.textContent;
+                    const dropdownButton = document.getElementById('categoryDropdownButton');
+
+                    dropdownButton.textContent = selectedText;
+                })
+            })
         </script>
     </body>
 </html>

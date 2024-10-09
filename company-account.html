@@ -1036,6 +1036,28 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="text-center fs-4 p-2"><span>9</span></td>
+                                        <td class="text-center fs-4 p-2"><span>(주) 엔디고</span></td>
+                                        <td class="text-center fs-4 p-2"><span>2024.06.14</span></td>
+                                        <td class="d-flex justify-content-center align-items-center gap-2 fs-4 p-2">
+                                            <div class="d-flex gap-3">
+                                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editAccountModal">수정</button>
+                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">삭제</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center fs-4 p-2"><span>10</span></td>
+                                        <td class="text-center fs-4 p-2"><span>(주) 엔디고</span></td>
+                                        <td class="text-center fs-4 p-2"><span>2024.04.14</span></td>
+                                        <td class="d-flex justify-content-center align-items-center gap-2 fs-4 p-2">
+                                            <div class="d-flex gap-3">
+                                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editAccountModal">수정</button>
+                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">삭제</button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
 
@@ -1117,14 +1139,14 @@
                             <label class='fs-4 w-200px'>Password(필수)</label>
                             <div class="input-group input-group-merge">
                                 <input type="password" id='password' class="form-control" autocomplete="off" data-toggle-password-input placeholder="비밀번호(8자 이상, 문자/숫자/기호 사용가능)">
-                                <button type="button" class="input-group-text px-4 text-secondary link-primary" data-toggle-password></button>
+                                <button type="button" class="input-group-text px-4 text-secondary link-primary pw-hidden" data-toggle-password></button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <label class='fs-4 w-200px'>Password 확인(필수)</label>
                             <div class="input-group input-group-merge">
                                 <input type="password" id='passwordConfirm' class="form-control" autocomplete="off" data-toggle-password-input placeholder="비밀번호를 다시 한 번 입력해주세요.">
-                                <button type="button" class="input-group-text px-4 text-secondary link-primary" data-toggle-password></button>
+                                <button type="button" class="input-group-text px-4 text-secondary link-primary pw-hidden" data-toggle-password></button>
                             </div>
                         </div>
                     </div>
@@ -1409,6 +1431,20 @@
                     searchButton.disabled = true;
                 }
             });
+        </script>
+        <script>
+            document.getElementById('createAccountModal').addEventListener('hidden.bs.modal', () => {
+                document.querySelectorAll('input').forEach((input) => {
+                    input.value = '';
+                })
+
+                document.getElementById('password').setAttribute('type', 'password');
+                document.getElementById('passwordConfirm').setAttribute('type', 'password');
+
+                document.querySelectorAll('.input-group-text.px-4.text-secondary.link-primary').forEach((button) => {
+                    button.classList.add('pw-hidden');
+                })
+            })
         </script>
     </body>
 </html>

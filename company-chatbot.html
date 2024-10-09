@@ -1003,9 +1003,9 @@
                             <div class="card-body">
                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                     <h2 class="h2 m-0">기업 챗봇 리스트</h2>
-                                    <button class="btn btn-primary">추가</button>
+                                    <button class="btn btn-primary" id='companyAddButton'>추가</button>
                                 </div>
-                                <div class="d-flex flex-column gap-7 mt-8">
+                                <div class="d-flex flex-column gap-7 mt-8" id='companyListContainer'>
                                     <div class="d-flex flex-column gap-3">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex align-items-center gap-2">
@@ -1237,14 +1237,22 @@
         <!-- JAVASCRIPT-->
         <!-- Theme JS -->
         <script src="./assets/js/theme.bundle.js"></script>        <script>
+        function handleEditButtonClick() {
             const editButtons = document.querySelectorAll('.edit-button');
             const detailEditCard = document.getElementById('detailEditCard');
 
             editButtons.forEach((button) => {
                 button.addEventListener('click', function() {
+                    const detailEditCardInputs = detailEditCard.querySelectorAll('input, textarea');
+                    detailEditCardInputs.forEach((input) => {
+                        input.value = '';
+                    });
+                    
                     detailEditCard.classList.remove('d-none');
                 });
             });
+        }
+        handleEditButtonClick();
         </script>
         <script>
             const deleteButtons = document.querySelectorAll('.delete-button');
@@ -1283,16 +1291,26 @@
             });
         </script>
         <script>
-            const listAddButton = document.getElementById('listAddButton');
+            let listCounter = 1;
+            let maxListCount = 5;
+
             const questionContainer = document.getElementById('questionContainer');
+            const listAddButton = document.getElementById('listAddButton');
         
-            listAddButton.addEventListener('click', function() {
+            listAddButton.addEventListener('click', () => {
+                listCounter++;  // 카운터 증가
+
                 const newInput = document.createElement('input');
                 newInput.setAttribute('type', 'text');
                 newInput.setAttribute('class', 'form-control');
                 newInput.setAttribute('placeholder', '질문을 입력하세요.');
         
                 questionContainer.insertBefore(newInput, listAddButton.parentElement);
+
+                if (listCounter >= maxListCount) {
+                    listAddButton.style.display = 'none';
+                    return;
+                }
             });
         </script>
         <script>
@@ -1328,6 +1346,37 @@
                     learningDataFileAddContainer.classList.add('d-none');
                     return;
                 }
+            });
+        </script>
+        <script>
+            document.getElementById('companyAddButton').addEventListener('click', () => {
+                const companyListContainer = document.getElementById('companyListContainer');
+                const lastItem = companyListContainer.querySelectorAll('.d-flex.align-items-center.justify-content-center.bg-dark').length;
+                const newItemNumber = lastItem + 1; // 마지막 번호를 가져와서 1 증가
+                
+                // 새로운 항목 HTML 템플릿
+                const newCompanyItem = `
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="d-flex align-items-center justify-content-center bg-dark text-white fs-3 fw-bold rounded w-40px h-40px">
+                                    ${newItemNumber}
+                                </div>
+                                <input type="text" class="form-control" placeholder="기업명을 입력하세요" />
+                            </div>
+                            <div class="d-flex gap-2 align-items-center">
+                                <button class="btn btn-info text-nowrap edit-button">수정</button>
+                                <button class="btn btn-danger text-nowrap delete-button">삭제</button>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control w-100" placeholder="챗봇 URL을 입력하세요">
+                    </div>
+                `;
+
+                // 새로운 항목을 companyListContainer의 마지막에 추가
+                companyListContainer.insertAdjacentHTML('beforeend', newCompanyItem);
+
+                handleEditButtonClick();
             });
         </script>
     </body>
